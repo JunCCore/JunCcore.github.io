@@ -16,28 +16,23 @@
   <meta name="author" content="JunCCore">
   <meta name="keywords" content="">
   
-    <meta name="description" content="DBT 开发环境搭建配置">
+    <meta name="description" content="MySql  常用指南MySql 知识点总结之（int(1) 和 int(10) 有什么区别？） 先说结论正常来说，没有区别。 后面带的数字，并不是长度的概念。 Int 类型就是占用4个字节（32位）， Int(1), int(10) 都一样是4个字节&#x2F;32位，数据范围也还是-2^31 ~ 2^31-1。 困惑对于日常建表过程中，大家普遍认为在使用过程中int(10)通常表示数值长度的位">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何搭建DBT开发环境">
-<meta property="og:url" content="http://example.com/2024/03/19/secondArticle/index.html">
+<meta property="og:title" content="「事有归着，心存寄物」">
+<meta property="og:url" content="http://example.com/2024/03/30/MySqlSummary01/index.html">
 <meta property="og:site_name" content="「事有归着，心存寄物」">
-<meta property="og:description" content="DBT 开发环境搭建配置">
+<meta property="og:description" content="MySql  常用指南MySql 知识点总结之（int(1) 和 int(10) 有什么区别？） 先说结论正常来说，没有区别。 后面带的数字，并不是长度的概念。 Int 类型就是占用4个字节（32位）， Int(1), int(10) 都一样是4个字节&#x2F;32位，数据范围也还是-2^31 ~ 2^31-1。 困惑对于日常建表过程中，大家普遍认为在使用过程中int(10)通常表示数值长度的位">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/1.jpg">
-<meta property="og:image" content="http://example.com/img/2.jpg">
-<meta property="og:image" content="http://example.com/img/3.jpg">
-<meta property="og:image" content="http://example.com/img/4.jpg">
-<meta property="article:published_time" content="2024-03-19T16:00:00.000Z">
+<meta property="article:published_time" content="2024-03-30T10:43:38.154Z">
 <meta property="article:modified_time" content="2024-03-30T10:43:38.158Z">
 <meta property="article:author" content="JunCCore">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/1.jpg">
   
   
     <meta name="referrer" content="no-referrer-when-downgrade">
   
   
-  <title>如何搭建DBT开发环境 - 「事有归着，心存寄物」</title>
+  <title>「事有归着，心存寄物」</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -242,7 +237,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="如何搭建DBT开发环境"></span>
+            <span id="subtitle" data-typed-text=""></span>
           
         </div>
 
@@ -253,8 +248,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-20 00:00" pubdate>
-          2024年3月20日 凌晨
+        <time datetime="2024-03-30 18:43" pubdate>
+          2024年3月30日 晚上
         </time>
       </span>
     
@@ -265,7 +260,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          184 字
+          783 字
         
       </span>
     
@@ -276,7 +271,7 @@
         
         
         
-          2 分钟
+          7 分钟
         
       </span>
     
@@ -334,50 +329,38 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">如何搭建DBT开发环境</h1>
+            <h1 id="seo-header"></h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="DBT-环境搭建步骤"><a href="#DBT-环境搭建步骤" class="headerlink" title="DBT 环境搭建步骤"></a>DBT 环境搭建步骤</h2><h3 id="第一步：准备pathon-虚拟环境"><a href="#第一步：准备pathon-虚拟环境" class="headerlink" title="第一步：准备pathon 虚拟环境"></a>第一步：准备pathon 虚拟环境</h3><p>1、python  安装版本为3.9.9；<br>DBT 环境搭建步骤： 【参考Python环境搭建】 <a target="_blank" rel="noopener" href="https://blog.csdn.net/mghoumin/article/details/126911677">https://blog.csdn.net/mghoumin/article/details/126911677</a><br>1.1创建python 虚拟环境<br>python -m venv python3.7.8_env</p>
-<p><img src="/img/1.jpg" srcset="/img/loading.gif" lazyload alt="Example Image" title="Example Title"></p>
-<p>1.2 激活虚拟环境<br>首先到Scripts目录下<br>执行 .\Activate.psl</p>
-<p><img src="/img/2.jpg" srcset="/img/loading.gif" lazyload alt="Example Image" title="Example Title"></p>
-<p>1.3 激活虚拟环境失败需要设置windows 安全策略用管理员模式运行 Windows PowerShell ， 然后输入get-ExecutionPolicy 取得shell的当前执行策 略，看到返回了 Restricted 默认值</p>
-<p><img src="/img/3.jpg" srcset="/img/loading.gif" lazyload alt="Example Image" title="Example Title"></p>
-<p>设置策略 set-ExecutionPolicy RemoteSigned</p>
-<p><img src="/img/4.jpg" srcset="/img/loading.gif" lazyload alt="Example Image" title="Example Title"></p>
-<p>2、配置激活python 虚拟环境；<br>Windows系统：.\Scripts\activate<br>MacOS和Linux系统：source bin&#x2F;activate</p>
-<p>3、安装pip 依赖包</p>
-<h3 id="第二步：安装DBT"><a href="#第二步：安装DBT" class="headerlink" title="第二步：安装DBT"></a>第二步：安装DBT</h3><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">pip  <span class="hljs-keyword">instal </span>dbt<br>pip  <span class="hljs-keyword">install </span>dbt-doris<br></code></pre></td></tr></table></figure>
-<h3 id="第三步：运行DBT"><a href="#第三步：运行DBT" class="headerlink" title="第三步：运行DBT"></a>第三步：运行DBT</h3><figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">1、进入python 虚拟环境 执行 <span class="hljs-string">./Active/Scripts.bat</span><br>2、运行DBT dbt debug <span class="hljs-params">--profiles-dir</span> <span class="hljs-string">./</span>    <br><br></code></pre></td></tr></table></figure>
+                <h2 id="MySql-常用指南"><a href="#MySql-常用指南" class="headerlink" title="MySql  常用指南"></a>MySql  常用指南</h2><p>MySql 知识点总结之（int(1) 和 int(10) 有什么区别？）</p>
+<h4 id="先说结论"><a href="#先说结论" class="headerlink" title="先说结论"></a>先说结论</h4><p>正常来说，没有区别。 后面带的数字，并不是长度的概念。 Int 类型就是占用4个字节（32位）， Int(1), int(10) 都一样是4个字节&#x2F;32位，数据范围也还是-2^31 ~ 2^31-1。</p>
+<h4 id="困惑"><a href="#困惑" class="headerlink" title="困惑"></a>困惑</h4><p>对于日常建表过程中，大家普遍认为在使用过程中int(10)通常表示数值长度的位数；包括我经常在也看到同事也一直使用int(10)，感觉用了int(1)，字段的上限就被限制，真实情况肯定不是这样。</p>
+<h4 id="数据说话"><a href="#数据说话" class="headerlink" title="数据说话"></a>数据说话</h4><p>我们知道在mysql中 int占4个字节，那么对于无符号的int，最大值是2^32-1 &#x3D; 4294967295，将近40亿，难道用了int(1)，就不能达到这个最大值吗？</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `<span class="hljs-keyword">user</span>` (<br>  `id` <span class="hljs-type">int</span>(<span class="hljs-number">1</span>) unsigned <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> AUTO_INCREMENT,<br>   <span class="hljs-keyword">PRIMARY</span> KEY (`id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB AUTO_INCREMENT<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4;<br></code></pre></td></tr></table></figure>
+<p>id字段为无符号的int(1)，我来插入一个最大值看看。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql">mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> `<span class="hljs-keyword">user</span>` (`id`) <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">4294967295</span>);<br>Query OK, <span class="hljs-number">1</span> <span class="hljs-type">row</span> affected (<span class="hljs-number">0.00</span> sec)<br></code></pre></td></tr></table></figure>
+
+<p>可以看到成功了，说明int后面的数字，不影响int本身支持的大小，int(1)、int(2)…int(10)没什么区别。</p>
+<h4 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a>官方解释</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-type">int</span>(M): M indicates the maximum display width <span class="hljs-keyword">for</span> <span class="hljs-type">integer</span> types.<br></code></pre></td></tr></table></figure>
+<p>翻译过来就是，在 integer 数据类型中，M 表示最大显示宽度。</p>
+<p>也就是说，在 int(M) 中，M 的值跟 int(M) 所占多少存储空间并无任何关系。 int(3)、int(4)、int(8) 在磁盘上都是占用4 bytes的存储空间。说白了，除了显示给用户的方式有点不同外，int(M) 跟 int 数据类型是相同的。</p>
+<p>另外，int(M) 只有跟</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">zerofill<br></code></pre></td></tr></table></figure>
+<p>结合起来，才能更清楚的看到它的具体含义。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs sql">mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> t(id <span class="hljs-type">int</span> zerofill);<br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> t(id) <span class="hljs-keyword">values</span>(<span class="hljs-number">10</span>);<br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> t;<br><span class="hljs-operator">+</span><span class="hljs-comment">------------+</span><br><span class="hljs-operator">|</span> id         <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">------------+</span><br><span class="hljs-operator">|</span> <span class="hljs-number">0000000010</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">------------+</span><br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> t change <span class="hljs-keyword">column</span> id <span class="hljs-type">int</span>(<span class="hljs-number">4</span>) zerofill;<br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> t;<br><span class="hljs-operator">+</span><span class="hljs-comment">------+</span><br><span class="hljs-operator">|</span> id   <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">------+</span><br><span class="hljs-operator">|</span> <span class="hljs-number">0010</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">------+</span><br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> t(id) <span class="hljs-keyword">values</span>(<span class="hljs-number">1000000</span>);<br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> t;<br><span class="hljs-operator">+</span><span class="hljs-comment">---------+</span><br><span class="hljs-operator">|</span> id      <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">---------+</span><br><span class="hljs-operator">|</span>    <span class="hljs-number">0010</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span> <span class="hljs-number">1000000</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">---------+</span><br></code></pre></td></tr></table></figure>
+<p>从上面的测试可以看出，“(M)”指定了 int 型数值显示的宽度，如果字段数据类型是 int(4)，那么当显示数值 10 时，在左边要补上 “00”；当显示数值 100 是，在左边要补上“0”；当显示数值 1000000 时，已经超过了指定宽度“（4）”，因此按原样输出。</p>
+<p>因此，在使用 MySQL 数据类型中的整数类型（tinyint、smallint、 mediumint、 int&#x2F;integer、bigint）时，非特殊需求下，在数据类型后加个“(M)”，是没有任何意义的。</p>
+<p>int(1)和int(11)在实际使用中，如果不使用 zerofill 是没有任何区别的，而且int型最大只能存储4294967295这个整数，也就是只有10位。</p>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><p>综上所述，当我们需要用整形来存储一个字段类型的时候，应该尽量估算出该字段所需要的实际长度，比如tinyint可存储无符号最大值是255（1个字节长度，即2的8次方），smallint可存储无符号最大值是65535（2个字节长度，即2的16次方），mediumint可存储无符号最大值是16777215（3个字节长度，即2的24次方），而int型最大可存储4294967295（3个字节长度，即2的32次方）。</p>
+
                 
               </div>
             
             <hr/>
             <div>
               <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" class="category-chain-item">技术分享</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
   
   
 </div>
@@ -390,15 +373,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/19/hello-world/" title="About hexo">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">About hexo</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
+                    
+                      <a href="/2024/03/20/markdownlearning/" title="markdown 编辑指南">
+                        <span class="hidden-mobile">markdown 编辑指南</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
                     
                   </article>
                 </div>
