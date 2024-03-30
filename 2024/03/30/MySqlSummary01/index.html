@@ -16,15 +16,15 @@
   <meta name="author" content="JunCCore">
   <meta name="keywords" content="">
   
-    <meta name="description" content="MySql  常用指南MySql 知识点总结之（int(1) 和 int(10) 有什么区别？） 先说结论正常来说，没有区别。 后面带的数字，并不是长度的概念。 Int 类型就是占用4个字节（32位）， Int(1), int(10) 都一样是4个字节&#x2F;32位，数据范围也还是-2^31 ~ 2^31-1。 困惑对于日常建表过程中，大家普遍认为在使用过程中int(10)通常表示数值长度的位">
+    <meta name="description" content="MySql  int(1) 和 int(10) 有什么区别？MySql 知识点总结之（int(1) 和 int(10) 有什么区别？） 先说结论正常来说，没有区别。 后面带的数字，并不是长度的概念。 Int 类型就是占用4个字节（32位）， Int(1), int(10) 都一样是4个字节&#x2F;32位，数据范围也还是-2^31 ~ 2^31-1。 困惑对于日常建表过程中，大家普遍认为在使用过">
 <meta property="og:type" content="article">
 <meta property="og:title" content="「事有归着，心存寄物」">
 <meta property="og:url" content="http://example.com/2024/03/30/MySqlSummary01/index.html">
 <meta property="og:site_name" content="「事有归着，心存寄物」">
-<meta property="og:description" content="MySql  常用指南MySql 知识点总结之（int(1) 和 int(10) 有什么区别？） 先说结论正常来说，没有区别。 后面带的数字，并不是长度的概念。 Int 类型就是占用4个字节（32位）， Int(1), int(10) 都一样是4个字节&#x2F;32位，数据范围也还是-2^31 ~ 2^31-1。 困惑对于日常建表过程中，大家普遍认为在使用过程中int(10)通常表示数值长度的位">
+<meta property="og:description" content="MySql  int(1) 和 int(10) 有什么区别？MySql 知识点总结之（int(1) 和 int(10) 有什么区别？） 先说结论正常来说，没有区别。 后面带的数字，并不是长度的概念。 Int 类型就是占用4个字节（32位）， Int(1), int(10) 都一样是4个字节&#x2F;32位，数据范围也还是-2^31 ~ 2^31-1。 困惑对于日常建表过程中，大家普遍认为在使用过">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-03-30T10:45:14.339Z">
-<meta property="article:modified_time" content="2024-03-30T10:45:14.339Z">
+<meta property="article:published_time" content="2024-03-30T10:51:22.528Z">
+<meta property="article:modified_time" content="2024-03-30T10:51:22.528Z">
 <meta property="article:author" content="JunCCore">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -248,7 +248,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-30 18:45" pubdate>
+        <time datetime="2024-03-30 18:51" pubdate>
           2024年3月30日 晚上
         </time>
       </span>
@@ -260,7 +260,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          783 字
+          789 字
         
       </span>
     
@@ -334,7 +334,7 @@
             
               <div class="markdown-body">
                 
-                <h2 id="MySql-常用指南"><a href="#MySql-常用指南" class="headerlink" title="MySql  常用指南"></a>MySql  常用指南</h2><p>MySql 知识点总结之（int(1) 和 int(10) 有什么区别？）</p>
+                <h2 id="MySql-int-1-和-int-10-有什么区别？"><a href="#MySql-int-1-和-int-10-有什么区别？" class="headerlink" title="MySql  int(1) 和 int(10) 有什么区别？"></a>MySql  int(1) 和 int(10) 有什么区别？</h2><p>MySql 知识点总结之（int(1) 和 int(10) 有什么区别？）</p>
 <h4 id="先说结论"><a href="#先说结论" class="headerlink" title="先说结论"></a>先说结论</h4><p>正常来说，没有区别。 后面带的数字，并不是长度的概念。 Int 类型就是占用4个字节（32位）， Int(1), int(10) 都一样是4个字节&#x2F;32位，数据范围也还是-2^31 ~ 2^31-1。</p>
 <h4 id="困惑"><a href="#困惑" class="headerlink" title="困惑"></a>困惑</h4><p>对于日常建表过程中，大家普遍认为在使用过程中int(10)通常表示数值长度的位数；包括我经常在也看到同事也一直使用int(10)，感觉用了int(1)，字段的上限就被限制，真实情况肯定不是这样。</p>
 <h4 id="数据说话"><a href="#数据说话" class="headerlink" title="数据说话"></a>数据说话</h4><p>我们知道在mysql中 int占4个字节，那么对于无符号的int，最大值是2^32-1 &#x3D; 4294967295，将近40亿，难道用了int(1)，就不能达到这个最大值吗？</p>
