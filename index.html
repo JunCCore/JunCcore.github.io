@@ -712,14 +712,14 @@
       var text = subtitle.getAttribute('data-typed-text');
       
         jQuery.ajax({
-          type: 'POST',
-          url: 'https://luckycola.com.cn/tools/yiyan',
-          headers: {"ColaKey":"C1JIGCKsL8BiTf1711897559874OXnjZ7p6Da"},
+          type: 'GET',
+          url: 'https://v1.hitokoto.cn/',
+          headers: {},
           dataType: 'json',
           success: function(result) {
             var apiText;
             if (result) {
-              var keys = 'data,note'.split(',');
+              var keys = 'hitokoto'.split(',');
               if (result instanceof Array) {
                 result = result[0];
               }
@@ -737,7 +737,7 @@
           },
           error: function(xhr, status, error) {
             if (error) {
-              console.error('Failed to request https://luckycola.com.cn/tools/yiyan:', error);
+              console.error('Failed to request https://v1.hitokoto.cn/:', error);
             }
             typing(text);
           }
