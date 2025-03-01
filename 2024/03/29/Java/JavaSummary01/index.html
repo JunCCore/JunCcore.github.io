@@ -16,24 +16,24 @@
   <meta name="author" content="JunCCore">
   <meta name="keywords" content="">
   
-    <meta name="description" content="结合日常查询">
+    <meta name="description" content="Java 运行时内存总结？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="10个高级的 SQL 查询技巧.">
-<meta property="og:url" content="http://example.com/2024/08/23/MySqlSummary04/index.html">
+<meta property="og:title" content="Java 运行时内存分析">
+<meta property="og:url" content="http://example.com/2024/03/29/Java/JavaSummary01/index.html">
 <meta property="og:site_name" content="「事有归着，心存寄物」">
-<meta property="og:description" content="结合日常查询">
+<meta property="og:description" content="Java 运行时内存总结？">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/sql.png">
-<meta property="article:published_time" content="2024-08-23T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-01T15:27:22.918Z">
+<meta property="og:image" content="http://example.com/img/Java.png">
+<meta property="article:published_time" content="2024-03-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-03-01T15:27:22.917Z">
 <meta property="article:author" content="JunCCore">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/sql.png">
+<meta name="twitter:image" content="http://example.com/img/Java.png">
   
   
   
-  <title>10个高级的 SQL 查询技巧. - 「事有归着，心存寄物」</title>
+  <title>Java 运行时内存分析 - 「事有归着，心存寄物」</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -257,7 +257,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="10个高级的 SQL 查询技巧."></span>
+            <span id="subtitle" data-typed-text="Java 运行时内存分析"></span>
           
         </div>
 
@@ -268,8 +268,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-08-24 00:00" pubdate>
-          2024年8月24日 凌晨
+        <time datetime="2024-03-30 00:00" pubdate>
+          2024年3月30日 凌晨
         </time>
       </span>
     
@@ -280,7 +280,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          751 字
+          8 字
         
       </span>
     
@@ -291,7 +291,7 @@
         
         
         
-          7 分钟
+          1 分钟
         
       </span>
     
@@ -349,29 +349,12 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">10个高级的 SQL 查询技巧.</h1>
+            <h1 id="seo-header">Java 运行时内存分析</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="1、常见表表达式（CTEs）"><a href="#1、常见表表达式（CTEs）" class="headerlink" title="1、常见表表达式（CTEs）"></a>1、常见表表达式（CTEs）</h2><p>如果您想要查询子查询，那就是CTEs施展身手的时候 - CTEs基本上创建了一个临时表。<br>使用常用表表达式（CTEs）是模块化和分解代码的好方法，与您将文章分解为几个段落的方式相同。<br>请在Where子句中使用子查询进行以下查询。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span><br>name,<br>salary<br><span class="hljs-keyword">FROM</span><br>People<br><span class="hljs-keyword">WHERE</span><br>NAMEIN(SELECTDISTINCTNAMEFROMpopulationWHEREcountry<span class="hljs-operator">=</span>&quot;Canada&quot;ANDcity<span class="hljs-operator">=</span>&quot;Toronto&quot;)<br>ANDsalary<span class="hljs-operator">&gt;=</span>(<br><span class="hljs-keyword">SELECT</span><br><span class="hljs-built_in">AVG</span>(salary)<br><span class="hljs-keyword">FROM</span><br>salaries<br><span class="hljs-keyword">WHERE</span><br>gender<span class="hljs-operator">=</span>&quot;Female&quot;)<br></code></pre></td></tr></table></figure>
-<p>这似乎似乎难以理解，但如果在查询中有许多子查询，那么怎么样？这就是CTEs发挥作用的地方。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">with</span> toronto_ppl <span class="hljs-keyword">as</span> (<br>   <span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> name<br>   <span class="hljs-keyword">FROM</span> population<br>   <span class="hljs-keyword">WHERE</span> country <span class="hljs-operator">=</span> &quot;Canada&quot;<br>         <span class="hljs-keyword">AND</span> city <span class="hljs-operator">=</span> &quot;Toronto&quot;<br>)<br>, avg_female_salary <span class="hljs-keyword">as</span> (<br>   <span class="hljs-keyword">SELECT</span> <span class="hljs-built_in">AVG</span>(salary) <span class="hljs-keyword">as</span> avgSalary<br>   <span class="hljs-keyword">FROM</span> salaries<br>   <span class="hljs-keyword">WHERE</span> gender <span class="hljs-operator">=</span> &quot;Female&quot;<br>)<br><span class="hljs-keyword">SELECT</span> name<br>       , salary<br><span class="hljs-keyword">FROM</span> People<br><span class="hljs-keyword">WHERE</span> name <span class="hljs-keyword">in</span> (<span class="hljs-keyword">SELECT</span> <span class="hljs-keyword">DISTINCT</span> <span class="hljs-keyword">FROM</span> toronto_ppl)<br>      <span class="hljs-keyword">AND</span> salary <span class="hljs-operator">&gt;=</span> (<span class="hljs-keyword">SELECT</span> avgSalary <span class="hljs-keyword">FROM</span> avg_female_salary)<br></code></pre></td></tr></table></figure>
-<p>现在很清楚，Where子句是在多伦多的名称中过滤。如果您注意到，CTE很有用，因为您可以将代码分解为较小的块，但它们也很有用，因为它允许您为每个CTE分配变量名称（即toronto_ppl和avg_female_salary）同样，CTEs允许您完成更高级的技术，如创建递归表。</p>
-<h2 id="2-递归CTEs"><a href="#2-递归CTEs" class="headerlink" title="2 递归CTEs."></a>2 递归CTEs.</h2><p>递归CTE是引用自己的CTE，就像Python中的递归函数一样。递归CTE尤其有用，它涉及查询组织结构图，文件系统，网页之间的链接图等的分层数据，尤其有用。递归CTE有3个部分：<br>锚构件：返回CTE的基本结果的初始查询递归成员：引用CTE的递归查询。这是所有与锚构件的联盟停止递归构件的终止条件以下是获取每个员工ID的管理器ID的递归CTE的示例：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">with</span>  org_structure  <span class="hljs-keyword">as</span>  (<br>      <span class="hljs-keyword">SELECT</span>  id,  manager_id<br>      <span class="hljs-keyword">FROM</span>  staff_members<br>      <span class="hljs-keyword">WHERE</span>  manager_id  <span class="hljs-keyword">IS</span>  <span class="hljs-keyword">NULL</span><br>      <span class="hljs-keyword">UNION</span>  <span class="hljs-keyword">ALL</span><br>      <span class="hljs-keyword">SELECT</span>  sm.id,  sm.manager_id<br>      <span class="hljs-keyword">FROM</span>  staff_members  sm<br>      <span class="hljs-keyword">INNER</span>  <span class="hljs-keyword">JOIN</span>  org_structure  os<br>    <span class="hljs-keyword">ON</span>  os.id  <span class="hljs-operator">=</span>  sm.manager_id<br><br></code></pre></td></tr></table></figure>
-
-<h2 id="3、临时函数"><a href="#3、临时函数" class="headerlink" title="3、临时函数"></a>3、临时函数</h2><pre><code class="hljs">如果您想了解有关临时函数的更多信息，请检查此项，但知道如何编写临时功能是重要的原因：
-</code></pre>
-<p>1.它允许您将代码的块分解为较小的代码块<br>2.它适用于写入清洁代码<br>3.它可以防止重复，并允许您重用类似于使用Python中的函数的代码。</p>
-<p>考虑以下示例：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span> name, <br>       <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> tenure <span class="hljs-operator">&lt;</span> <span class="hljs-number">1</span> <span class="hljs-keyword">THEN</span> &quot;analyst&quot;<br>          <span class="hljs-keyword">WHEN</span> tenure <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> <span class="hljs-number">3</span> <span class="hljs-keyword">THEN</span> &quot;associate&quot;<br>          <span class="hljs-keyword">WHEN</span> tenure <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> <span class="hljs-number">5</span> <span class="hljs-keyword">THEN</span> &quot;senior&quot;<br>          <span class="hljs-keyword">WHEN</span> tenure <span class="hljs-operator">&gt;</span> <span class="hljs-number">5</span> <span class="hljs-keyword">THEN</span> &quot;vp&quot;<br>          <span class="hljs-keyword">ELSE</span> &quot;n/a&quot;<br>     <span class="hljs-keyword">END</span> <span class="hljs-keyword">AS</span> seniority <br><span class="hljs-keyword">FROM</span> employees<br></code></pre></td></tr></table></figure>
-<p>临时函数来捕获案例子句:</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> TEMPORARY <span class="hljs-keyword">FUNCTION</span> get_seniority(tenure INT64) <span class="hljs-keyword">AS</span> (<br>   <span class="hljs-keyword">CASE</span> <span class="hljs-keyword">WHEN</span> tenure <span class="hljs-operator">&lt;</span> <span class="hljs-number">1</span> <span class="hljs-keyword">THEN</span> &quot;analyst&quot;<br>        <span class="hljs-keyword">WHEN</span> tenure <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> <span class="hljs-number">3</span> <span class="hljs-keyword">THEN</span> &quot;associate&quot;<br>        <span class="hljs-keyword">WHEN</span> tenure <span class="hljs-keyword">BETWEEN</span> <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> <span class="hljs-number">5</span> <span class="hljs-keyword">THEN</span> &quot;senior&quot;<br>        <span class="hljs-keyword">WHEN</span> tenure <span class="hljs-operator">&gt;</span> <span class="hljs-number">5</span> <span class="hljs-keyword">THEN</span> &quot;vp&quot;<br>        <span class="hljs-keyword">ELSE</span> &quot;n/a&quot;<br>   <span class="hljs-keyword">END</span><br>);<br><span class="hljs-keyword">SELECT</span> name<br>       , get_seniority(tenure) <span class="hljs-keyword">as</span> seniority<br><span class="hljs-keyword">FROM</span> employees<br></code></pre></td></tr></table></figure>
-<h2 id="4-Rank-vs-Dense-Rank-vs-Row-Number"><a href="#4-Rank-vs-Dense-Rank-vs-Row-Number" class="headerlink" title="4 Rank vs Dense Rank vs Row Number"></a>4 Rank vs Dense Rank vs Row Number</h2><p>在SQL中，您可以使用几种方式将“等级”分配给行，我们将使用示例进行探索。考虑以下Query和结果：</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">SELECT</span>  Name    <br>  ,  GPA    <br>  ,  <span class="hljs-built_in">ROW_NUMBER</span>()  <span class="hljs-keyword">OVER</span>  (<span class="hljs-keyword">ORDER</span>  <span class="hljs-keyword">BY</span>  GPA  <span class="hljs-keyword">desc</span>)    <br>  ,  <span class="hljs-built_in">RANK</span>()  <span class="hljs-keyword">OVER</span>  (<span class="hljs-keyword">ORDER</span>  <span class="hljs-keyword">BY</span>  GPA  <span class="hljs-keyword">desc</span>)    <br>  ,  <span class="hljs-built_in">DENSE_RANK</span>()  <span class="hljs-keyword">OVER</span>  (<span class="hljs-keyword">ORDER</span>  <span class="hljs-keyword">BY</span>  GPA  <span class="hljs-keyword">desc</span>)    <br><span class="hljs-keyword">FROM</span>  student_grades<br></code></pre></td></tr></table></figure>
-<p>ROW_NUMBER()返回每行开始的唯一编号。当存在关系时（例如，BOB vs Carrie），ROW_NUMBER()如果未定义第二条标准，则任意分配数字。Rank()返回从1开始的每行的唯一编号，除了有关系时，Rank()将分配相同的数字。同样，差距将遵循重复的等级。dense_rank()类似于Rank()，除了重复等级后没有间隙。请注意，使用dense_rank()，Daniel排名第3，而不是第4位。</p>
+                <h2 id="Java-运行时内存总结？"><a href="#Java-运行时内存总结？" class="headerlink" title="Java 运行时内存总结？"></a>Java 运行时内存总结？</h2><p><img src="/img/java_class.jpg" srcset="/img/loading.gif" lazyload alt="Example Image" title="Example Title"></p>
 
                 
               </div>
@@ -417,8 +400,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>10个高级的 SQL 查询技巧.</div>
-      <div>http://example.com/2024/08/23/MySqlSummary04/</div>
+      <div>Java 运行时内存分析</div>
+      <div>http://example.com/2024/03/29/Java/JavaSummary01/</div>
     </div>
     <div class="license-meta">
       
@@ -430,7 +413,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年8月24日</div>
+          <div>2024年3月30日</div>
         </div>
       
       
@@ -455,12 +438,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2024/03/29/MySqlSummary01/" title="MySql  int(1) 和 int(10) 有什么区别？">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">MySql  int(1) 和 int(10) 有什么区别？</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/08/10/MySqlSummary03/" title="MySql无法删除主键？">
-                        <span class="hidden-mobile">MySql无法删除主键？</span>
+                      <a href="/2024/03/20/markdownlearning/" title="markdown 编辑指南">
+                        <span class="hidden-mobile">markdown 编辑指南</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
