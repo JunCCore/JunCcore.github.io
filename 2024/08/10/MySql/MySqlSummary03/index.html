@@ -16,16 +16,16 @@
   <meta name="author" content="JunCCore">
   <meta name="keywords" content="">
   
-    <meta name="description" content="MySql 知识点总结之（int(1) 和 int(10) 有什么区别？">
+    <meta name="description" content="在日常工作中，常常需要将某一个主键调整为联合主键，必须要删除主键信息。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MySql  int(1) 和 int(10) 有什么区别？">
-<meta property="og:url" content="http://example.com/2024/03/29/MySqlSummary01/index.html">
+<meta property="og:title" content="MySql无法删除主键？">
+<meta property="og:url" content="http://example.com/2024/08/10/MySql/MySqlSummary03/index.html">
 <meta property="og:site_name" content="「事有归着，心存寄物」">
-<meta property="og:description" content="MySql 知识点总结之（int(1) 和 int(10) 有什么区别？">
+<meta property="og:description" content="在日常工作中，常常需要将某一个主键调整为联合主键，必须要删除主键信息。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/img/sql.png">
-<meta property="article:published_time" content="2024-03-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-02T02:30:04.743Z">
+<meta property="article:published_time" content="2024-08-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-18T15:47:54.296Z">
 <meta property="article:author" content="JunCCore">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +33,7 @@
   
   
   
-  <title>MySql  int(1) 和 int(10) 有什么区别？ - 「事有归着，心存寄物」</title>
+  <title>MySql无法删除主键？ - 「事有归着，心存寄物」</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -257,7 +257,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="MySql  int(1) 和 int(10) 有什么区别？"></span>
+            <span id="subtitle" data-typed-text="MySql无法删除主键？"></span>
           
         </div>
 
@@ -268,8 +268,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-30 00:00" pubdate>
-          2024年3月30日 凌晨
+        <time datetime="2024-08-11 00:00" pubdate>
+          2024年8月11日 凌晨
         </time>
       </span>
     
@@ -280,7 +280,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          789 字
+          564 字
         
       </span>
     
@@ -291,7 +291,7 @@
         
         
         
-          7 分钟
+          5 分钟
         
       </span>
     
@@ -349,31 +349,32 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">MySql  int(1) 和 int(10) 有什么区别？</h1>
+            <h1 id="seo-header">MySql无法删除主键？</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="MySql-int-1-和-int-10-有什么区别？"><a href="#MySql-int-1-和-int-10-有什么区别？" class="headerlink" title="MySql  int(1) 和 int(10) 有什么区别？"></a>MySql  int(1) 和 int(10) 有什么区别？</h2><p>MySql 知识点总结之（int(1) 和 int(10) 有什么区别？）</p>
-<h4 id="先说结论"><a href="#先说结论" class="headerlink" title="先说结论"></a>先说结论</h4><p>正常来说，没有区别。 后面带的数字，并不是长度的概念。 Int 类型就是占用4个字节（32位）， Int(1), int(10) 都一样是4个字节&#x2F;32位，数据范围也还是-2^31 ~ 2^31-1。</p>
-<h4 id="困惑"><a href="#困惑" class="headerlink" title="困惑"></a>困惑</h4><p>对于日常建表过程中，大家普遍认为在使用过程中int(10)通常表示数值长度的位数；包括我经常在也看到同事也一直使用int(10)，感觉用了int(1)，字段的上限就被限制，真实情况肯定不是这样。</p>
-<h4 id="数据说话"><a href="#数据说话" class="headerlink" title="数据说话"></a>数据说话</h4><p>我们知道在mysql中 int占4个字节，那么对于无符号的int，最大值是2^32-1 &#x3D; 4294967295，将近40亿，难道用了int(1)，就不能达到这个最大值吗？</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> `<span class="hljs-keyword">user</span>` (<br>  `id` <span class="hljs-type">int</span>(<span class="hljs-number">1</span>) unsigned <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span> AUTO_INCREMENT,<br>   <span class="hljs-keyword">PRIMARY</span> KEY (`id`)<br>) ENGINE<span class="hljs-operator">=</span>InnoDB AUTO_INCREMENT<span class="hljs-operator">=</span><span class="hljs-number">1</span> <span class="hljs-keyword">DEFAULT</span> CHARSET<span class="hljs-operator">=</span>utf8mb4;<br></code></pre></td></tr></table></figure>
-<p>id字段为无符号的int(1)，我来插入一个最大值看看。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql">mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">INSERT</span> <span class="hljs-keyword">INTO</span> `<span class="hljs-keyword">user</span>` (`id`) <span class="hljs-keyword">VALUES</span> (<span class="hljs-number">4294967295</span>);<br>Query OK, <span class="hljs-number">1</span> <span class="hljs-type">row</span> affected (<span class="hljs-number">0.00</span> sec)<br></code></pre></td></tr></table></figure>
+                <h2 id="1、问题背景"><a href="#1、问题背景" class="headerlink" title="1、问题背景"></a>1、问题背景</h2><pre><code class="hljs">同事咨询了一个问题，TD-SQL （for MySQL）中的某张表主键需要改为联合主键，是否必须先删除现有的主键？因为删除主键时，
+</code></pre>
+<p>提示这个错误。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs sql">[test]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> test <span class="hljs-keyword">drop</span> <span class="hljs-keyword">primary</span> key;<br><br>ERROR <span class="hljs-number">3750</span> (HY000): Unable <span class="hljs-keyword">to</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">or</span> change a <span class="hljs-keyword">table</span> <span class="hljs-keyword">without</span> a <span class="hljs-keyword">primary</span> key, <br><span class="hljs-keyword">when</span> the <span class="hljs-keyword">system</span> variable <span class="hljs-string">&#x27;sql_require_primary_key&#x27;</span> <span class="hljs-keyword">is</span> set. <br><span class="hljs-keyword">Add</span> a <span class="hljs-keyword">primary</span> key <span class="hljs-keyword">to</span> the <span class="hljs-keyword">table</span> <span class="hljs-keyword">or</span> unset this variable <span class="hljs-keyword">to</span> avoid this message. <br>Note that tables <span class="hljs-keyword">without</span> a <span class="hljs-keyword">primary</span> key can cause performance problems <span class="hljs-keyword">in</span> <span class="hljs-type">row</span><span class="hljs-operator">-</span>based replication, <br>so please consult your DBA before changing this setting.<br></code></pre></td></tr></table></figure>
 
-<p>可以看到成功了，说明int后面的数字，不影响int本身支持的大小，int(1)、int(2)…int(10)没什么区别。</p>
-<h4 id="官方解释"><a href="#官方解释" class="headerlink" title="官方解释"></a>官方解释</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-type">int</span>(M): M indicates the maximum display width <span class="hljs-keyword">for</span> <span class="hljs-type">integer</span> types.<br></code></pre></td></tr></table></figure>
-<p>翻译过来就是，在 integer 数据类型中，M 表示最大显示宽度。</p>
-<p>也就是说，在 int(M) 中，M 的值跟 int(M) 所占多少存储空间并无任何关系。 int(3)、int(4)、int(8) 在磁盘上都是占用4 bytes的存储空间。说白了，除了显示给用户的方式有点不同外，int(M) 跟 int 数据类型是相同的。</p>
-<p>另外，int(M) 只有跟</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">zerofill<br></code></pre></td></tr></table></figure>
-<p>结合起来，才能更清楚的看到它的具体含义。</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs sql">mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">table</span> t(id <span class="hljs-type">int</span> zerofill);<br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> t(id) <span class="hljs-keyword">values</span>(<span class="hljs-number">10</span>);<br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> t;<br><span class="hljs-operator">+</span><span class="hljs-comment">------------+</span><br><span class="hljs-operator">|</span> id         <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">------------+</span><br><span class="hljs-operator">|</span> <span class="hljs-number">0000000010</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">------------+</span><br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> t change <span class="hljs-keyword">column</span> id <span class="hljs-type">int</span>(<span class="hljs-number">4</span>) zerofill;<br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> t;<br><span class="hljs-operator">+</span><span class="hljs-comment">------+</span><br><span class="hljs-operator">|</span> id   <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">------+</span><br><span class="hljs-operator">|</span> <span class="hljs-number">0010</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">------+</span><br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">insert</span> <span class="hljs-keyword">into</span> t(id) <span class="hljs-keyword">values</span>(<span class="hljs-number">1000000</span>);<br>mysql<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> t;<br><span class="hljs-operator">+</span><span class="hljs-comment">---------+</span><br><span class="hljs-operator">|</span> id      <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">---------+</span><br><span class="hljs-operator">|</span>    <span class="hljs-number">0010</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">|</span> <span class="hljs-number">1000000</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">---------+</span><br></code></pre></td></tr></table></figure>
-<p>从上面的测试可以看出，“(M)”指定了 int 型数值显示的宽度，如果字段数据类型是 int(4)，那么当显示数值 10 时，在左边要补上 “00”；当显示数值 100 是，在左边要补上“0”；当显示数值 1000000 时，已经超过了指定宽度“（4）”，因此按原样输出。</p>
-<p>因此，在使用 MySQL 数据类型中的整数类型（tinyint、smallint、 mediumint、 int&#x2F;integer、bigint）时，非特殊需求下，在数据类型后加个“(M)”，是没有任何意义的。</p>
-<p>int(1)和int(11)在实际使用中，如果不使用 zerofill 是没有任何区别的，而且int型最大只能存储4294967295这个整数，也就是只有10位。</p>
-<h4 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h4><p>综上所述，当我们需要用整形来存储一个字段类型的时候，应该尽量估算出该字段所需要的实际长度，比如tinyint可存储无符号最大值是255（1个字节长度，即2的8次方），smallint可存储无符号最大值是65535（2个字节长度，即2的16次方），mediumint可存储无符号最大值是16777215（3个字节长度，即2的24次方），而int型最大可存储4294967295（3个字节长度，即2的32次方）。</p>
+<h2 id="2、问题分析"><a href="#2、问题分析" class="headerlink" title="2、问题分析"></a>2、问题分析</h2><pre><code class="hljs">从提示上可以看到具体的原因，当设置了 sql_require_primary_key 参数，不能创建或改变一张没有主键的表。
+</code></pre>
+<p>解决方案是增加主键或者删除此参数避免错误，同时提醒了，如果表无主键，可能会导致基于行的复制产生性能问题。</p>
+<p>&#x2F;<em>sql_require_primary_key</em>&#x2F; 参数控制的是强制检查主键，可以动态修改。</p>
+<h3 id="参数释意"><a href="#参数释意" class="headerlink" title="参数释意"></a>参数释意</h3><p>参数名称：sql_require_primary_key<br>作用范围：Global &amp; Session<br>动态修改：Yes<br>默认值：OFF<br>该参数设置为 ON 时，SQL 语句 create table 创建新表或者 alter 语句时，对已存在的表进行修改，将会强制检查表中是否包含主键，如果没有主键，则会报错。</p>
+<h2 id="3、解决方案"><a href="#3、解决方案" class="headerlink" title="3、解决方案"></a>3、解决方案</h2><h3 id="方案一"><a href="#方案一" class="headerlink" title="方案一"></a>方案一</h3><pre><code class="hljs">既然 sql_require_primary_key 参数控制了强制检验主键，而且又是可动态修改的，临时关闭，再打开即可。
+</code></pre>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs sql">bisal<span class="hljs-variable">@mysqldb</span>:  [test]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> t_primary_key <span class="hljs-keyword">drop</span> <span class="hljs-keyword">primary</span> key;<br>ERROR <span class="hljs-number">3750</span> (HY000): Unable <span class="hljs-keyword">to</span> <span class="hljs-keyword">create</span> <span class="hljs-keyword">or</span> change a <span class="hljs-keyword">table</span> <span class="hljs-keyword">without</span> a <span class="hljs-keyword">primary</span> key, <span class="hljs-keyword">when</span> the <span class="hljs-keyword">system</span> variable <span class="hljs-string">&#x27;sql_require_primary_key&#x27;</span> <span class="hljs-keyword">is</span> set. <span class="hljs-keyword">Add</span> a <span class="hljs-keyword">primary</span> key <span class="hljs-keyword">to</span> the <span class="hljs-keyword">table</span> <span class="hljs-keyword">or</span> unset this variable <span class="hljs-keyword">to</span> avo<br><br>bisal<span class="hljs-variable">@mysqldb</span>:  [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">show</span> variables <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%sql_require%&#x27;</span>;<br><span class="hljs-operator">+</span><span class="hljs-comment">-------------------------+-------+</span><br><span class="hljs-operator">|</span> Variable_name           <span class="hljs-operator">|</span> <span class="hljs-keyword">Value</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">-------------------------+-------+</span><br><span class="hljs-operator">|</span> sql_require_primary_key <span class="hljs-operator">|</span> <span class="hljs-keyword">ON</span>   <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">-------------------------+-------+</span><br><span class="hljs-number">1</span> <span class="hljs-type">row</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">set</span> (<span class="hljs-number">0.00</span> sec)<br><br>bisal<span class="hljs-variable">@mysqldb</span>:  [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">set</span> sql_require_primary_key <span class="hljs-operator">=</span> <span class="hljs-keyword">ON</span>;<br>Query OK, <span class="hljs-number">0</span> <span class="hljs-keyword">rows</span> affected (<span class="hljs-number">0.02</span> sec)<br><br>bisal<span class="hljs-variable">@mysqldb</span>:  [(<span class="hljs-keyword">none</span>)]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">show</span> variables <span class="hljs-keyword">like</span> <span class="hljs-string">&#x27;%sql_require%&#x27;</span>;<br><span class="hljs-operator">+</span><span class="hljs-comment">-------------------------+-------+</span><br><span class="hljs-operator">|</span> Variable_name           <span class="hljs-operator">|</span> <span class="hljs-keyword">Value</span> <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">-------------------------+-------+</span><br><span class="hljs-operator">|</span> sql_require_primary_key <span class="hljs-operator">|</span> OFF    <span class="hljs-operator">|</span><br><span class="hljs-operator">+</span><span class="hljs-comment">-------------------------+-------+</span><br><span class="hljs-number">1</span> <span class="hljs-type">row</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">set</span> (<span class="hljs-number">0.00</span> sec)<br><br>bisal<span class="hljs-variable">@mysqldb</span>:  [test]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> t_primary_key <span class="hljs-keyword">drop</span> <span class="hljs-keyword">primary</span> key;<br>Query OK, <span class="hljs-number">0</span> <span class="hljs-keyword">rows</span> affected (<span class="hljs-number">0.10</span> sec)<br>Records: <span class="hljs-number">0</span>  Duplicates: <span class="hljs-number">0</span>  Warnings: <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="方案二"><a href="#方案二" class="headerlink" title="方案二"></a>方案二</h3><pre><code class="hljs">如果 sql_require_primary_key 设置为 ON，意思就是表任何的时刻都需要有主键，不能出现真空。变更主键的操作，
+</code></pre>
+<p>实际包含了删除原主键和创建新的主键两个步骤，因此只需要将两个步骤合并成一个即可。<br>MySQL 支持多个语句一次执行，因此只需要将 alter table … drop primary key 和 add constraint … primary key … 合成一条语句。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql">bisal<span class="hljs-variable">@mysqldb</span>:  [test]<span class="hljs-operator">&gt;</span> <span class="hljs-keyword">alter</span> <span class="hljs-keyword">table</span> t_primary_key <span class="hljs-keyword">drop</span> <span class="hljs-keyword">primary</span> key, <span class="hljs-keyword">add</span> <span class="hljs-keyword">constraint</span> pk_t_01 <span class="hljs-keyword">primary</span> key (id, c1);<br>Query OK, <span class="hljs-number">0</span> <span class="hljs-keyword">rows</span> affected (<span class="hljs-number">0.06</span> sec)<br>Records: <span class="hljs-number">0</span>  Duplicates: <span class="hljs-number">0</span>  Warnings: <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><pre><code class="hljs">从这个问题可以看出来，MySQL 的参数控制粒度很细，但通过各种应对方法，可以针对性解决特定的场景问题，
+</code></pre>
+<p>但前提还是对参数的意义，以及场景的需求能充分了解，才能找到合适的解决方案。</p>
 
                 
               </div>
@@ -419,8 +420,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>MySql  int(1) 和 int(10) 有什么区别？</div>
-      <div>http://example.com/2024/03/29/MySqlSummary01/</div>
+      <div>MySql无法删除主键？</div>
+      <div>http://example.com/2024/08/10/MySql/MySqlSummary03/</div>
     </div>
     <div class="license-meta">
       
@@ -432,7 +433,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年3月30日</div>
+          <div>2024年8月11日</div>
         </div>
       
       
@@ -457,9 +458,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/03/29/JavaSummary01/" title="Java 运行时内存分析">
+                      <a href="/2024/08/23/MySql/MySqlSummary04/" title="10个高级的 SQL 查询技巧.">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java 运行时内存分析</span>
+                        <span class="hidden-mobile">10个高级的 SQL 查询技巧.</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -467,8 +468,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/03/20/markdownlearning/" title="markdown 编辑指南">
-                        <span class="hidden-mobile">markdown 编辑指南</span>
+                      <a href="/2024/04/01/MySql/MySqlSummary02/" title="如何优化慢Sql？">
+                        <span class="hidden-mobile">如何优化慢Sql？</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

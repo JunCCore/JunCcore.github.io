@@ -16,24 +16,24 @@
   <meta name="author" content="JunCCore">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Java 运行时内存总结！内存管理Java 的内存管理主要由 Java 虚拟机（JVM）自动处理，开发者无需手动分配和释放内存。Java 的内存模型主要分为以下几个部分：  方法区（Method Area）：存储类结构信息、常量池、静态变量等。 堆（Heap）：存储对象实例，是垃圾回收的主要区域。 栈（Stack）：存储方法的局部变量、操作数栈、方法返回地址等。 程序计数器（Program Cou">
+    <meta name="description" content="mysql 入门级规范及常用命令">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 运行时内存分析">
-<meta property="og:url" content="http://example.com/2024/03/29/JavaSummary01/index.html">
+<meta property="og:title" content="MySql 日常">
+<meta property="og:url" content="http://example.com/2024/03/19/MySql/MySqlAbout/index.html">
 <meta property="og:site_name" content="「事有归着，心存寄物」">
-<meta property="og:description" content="Java 运行时内存总结！内存管理Java 的内存管理主要由 Java 虚拟机（JVM）自动处理，开发者无需手动分配和释放内存。Java 的内存模型主要分为以下几个部分：  方法区（Method Area）：存储类结构信息、常量池、静态变量等。 堆（Heap）：存储对象实例，是垃圾回收的主要区域。 栈（Stack）：存储方法的局部变量、操作数栈、方法返回地址等。 程序计数器（Program Cou">
+<meta property="og:description" content="mysql 入门级规范及常用命令">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/Java.png">
-<meta property="article:published_time" content="2024-03-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-03-02T02:30:04.743Z">
+<meta property="og:image" content="http://example.com/img/sql.png">
+<meta property="article:published_time" content="2024-03-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-07-18T15:47:54.296Z">
 <meta property="article:author" content="JunCCore">
-<meta property="article:tag" content="java">
+<meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/Java.png">
+<meta name="twitter:image" content="http://example.com/img/sql.png">
   
   
   
-  <title>Java 运行时内存分析 - 「事有归着，心存寄物」</title>
+  <title>MySql 日常 - 「事有归着，心存寄物」</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -257,7 +257,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Java 运行时内存分析"></span>
+            <span id="subtitle" data-typed-text="MySql 日常"></span>
           
         </div>
 
@@ -268,8 +268,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-03-30 00:00" pubdate>
-          2024年3月30日 凌晨
+        <time datetime="2024-03-20 00:00" pubdate>
+          2024年3月20日 凌晨
         </time>
       </span>
     
@@ -280,7 +280,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          856 字
+          1.5k 字
         
       </span>
     
@@ -291,7 +291,7 @@
         
         
         
-          8 分钟
+          13 分钟
         
       </span>
     
@@ -349,57 +349,103 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Java 运行时内存分析</h1>
+            <h1 id="seo-header">MySql 日常</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="Java-运行时内存总结！"><a href="#Java-运行时内存总结！" class="headerlink" title="Java 运行时内存总结！"></a>Java 运行时内存总结！</h2><h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><p>Java 的内存管理主要由 Java 虚拟机（JVM）自动处理，开发者无需手动分配和释放内存。Java 的内存模型主要分为以下几个部分：</p>
-<ul>
-<li><strong>方法区（Method Area）</strong>：存储类结构信息、常量池、静态变量等。</li>
-<li><strong>堆（Heap）</strong>：存储对象实例，是垃圾回收的主要区域。</li>
-<li><strong>栈（Stack）</strong>：存储方法的局部变量、操作数栈、方法返回地址等。</li>
-<li><strong>程序计数器（Program Counter Register）</strong>：指示当前线程执行的字节码指令地址。</li>
-<li><strong>本地方法栈（Native Method Stack）</strong>：为本地方法服务。</li>
-</ul>
-<h3 id="堆内存结构"><a href="#堆内存结构" class="headerlink" title="堆内存结构"></a>堆内存结构</h3><p>堆内存进一步细分为：</p>
-<ul>
-<li><strong>新生代（Young Generation）</strong>：包括 Eden 区和两个 Survivor 区（S0 和 S1）。新创建的对象通常先分配到 Eden 区。</li>
-<li><strong>老年代（Old Generation）</strong>：存放经过多次垃圾回收后依然存活的对象。</li>
-</ul>
-<h2 id="垃圾回收（Garbage-Collection）"><a href="#垃圾回收（Garbage-Collection）" class="headerlink" title="垃圾回收（Garbage Collection）"></a>垃圾回收（Garbage Collection）</h2><p>垃圾回收是 JVM 自动管理内存的重要机制，主要任务是识别和回收不再使用的对象，释放其占用的内存。垃圾回收主要包括以下几个步骤：</p>
-<h3 id="对象存活判断"><a href="#对象存活判断" class="headerlink" title="对象存活判断"></a>对象存活判断</h3><ul>
-<li><strong>引用计数法</strong>：每个对象有一个引用计数器，当引用计数器为 0 时，对象被判定为垃圾。但这种方法无法处理循环引用问题。</li>
-<li><strong>可达性分析（Reachability Analysis）</strong>：从 GC Roots 开始，搜索从根节点出发的所有引用路径，可达的对象被判定为存活，反之则为垃圾。GC Roots 通常包括：<ul>
-<li>虚拟机栈中引用的对象。</li>
-<li>方法区中类静态属性引用的对象。</li>
-<li>方法区中常量引用的对象。</li>
-<li>本地方法栈中 JNI 引用的对象。</li>
-</ul>
-</li>
-</ul>
-<h3 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h3><ul>
-<li><strong>标记-清除（Mark-Sweep）</strong>：标记所有存活的对象，然后清除未标记的对象。缺点是可能会产生内存碎片。</li>
-<li><strong>标记-整理（Mark-Compact）</strong>：在标记-清除的基础上，整理存活对象，移动到一端，避免内存碎片。</li>
-<li><strong>复制（Copying）</strong>：将内存分为两块，每次只使用其中一块，当这一块用完时，将存活对象复制到另一块，然后清理已使用的那一块。</li>
-<li><strong>分代收集（Generational Collection）</strong>：根据对象存活周期的不同，将内存分为新生代和老年代，分别采用不同的垃圾回收算法。</li>
-</ul>
-<h3 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h3><p>JVM 提供了多种垃圾回收器，每种都有其适用场景：</p>
-<ul>
-<li><strong>Serial 收集器</strong>：单线程收集器，适用于单核 CPU 环境。</li>
-<li><strong>ParNew 收集器</strong>：Serial 收集器的多线程版本。</li>
-<li><strong>Parallel Scavenge 收集器</strong>：关注吞吐量，适用于后台计算而不需要太多交互的场景。</li>
-<li><strong>CMS（Concurrent Mark Sweep）收集器</strong>：关注最短回收停顿时间，适用于对响应时间有要求的应用。</li>
-<li><strong>G1（Garbage First）收集器</strong>：面向服务端应用，目标是在延迟可控的情况下获得尽可能高的吞吐量。</li>
-</ul>
-<h3 id="垃圾回收触发条件"><a href="#垃圾回收触发条件" class="headerlink" title="垃圾回收触发条件"></a>垃圾回收触发条件</h3><ul>
-<li><strong>分配内存时 Eden 区已满</strong>：触发 Minor GC（新生代垃圾回收）。</li>
-<li><strong>老年代空间不足</strong>：触发 Full GC（全量垃圾回收）。</li>
-<li><strong>方法区空间不足</strong>：触发 Full GC。</li>
-<li><strong>System.gc() 方法调用</strong>：建议 JVM 执行 Full GC，但不保证执行。</li>
-</ul>
-<p>Java 的内存管理和垃圾回收机制大大减轻了开发者的负担，但理解其工作原理有助于优化程序性能和调试内存问题。</p>
-<p><img src="/img/java_class.png" srcset="/img/loading.gif" lazyload alt="Example Image" title="Example Title"></p>
+                <h2 id="MySql-常用指南"><a href="#MySql-常用指南" class="headerlink" title="MySql  常用指南"></a>MySql  常用指南</h2><p>MySql 日常使用命令汇总</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sql">DDL（data definition <span class="hljs-keyword">language</span>）数据定义语言，用户定义和管理<span class="hljs-keyword">sql</span>数据库中所有对象的语言。<br>DML（data manipulation <span class="hljs-keyword">language</span>）数据操作语言。<br>DCL（<span class="hljs-type">date</span> control <span class="hljs-keyword">language</span>）数据库控制功能。<br></code></pre></td></tr></table></figure>
+<h3 id="数据库对象"><a href="#数据库对象" class="headerlink" title="数据库对象"></a>数据库对象</h3><p>&emsp;&emsp;数据库对象是数据库的组成部分，常见的有以下几种：表（Table ）、索引（Index）、视图（View）、图表（Diagram）、缺省值（Default）、规则（Rule）、触发器（Trigger）、存储过程（Stored Procedure）、 用户（User）等。 命名规范是指数据库对象如数据库（SCHEMA）、表（TABLE）、索引（INDEX）、约束（CONSTRAINTS）等的命名约定。</p>
+<h3 id="数据库对象全局命名规范"><a href="#数据库对象全局命名规范" class="headerlink" title="数据库对象全局命名规范"></a>数据库对象全局命名规范</h3><blockquote>
+<ol>
+<li>命名使用具有意义的英文词汇，词汇中间以下划线分隔</li>
+<li>命名只能使用英文字母、数字、下划线，以英文字母开头</li>
+<li>避免用MySQL的保留字如：backup、call、group等，参考MySQL 5.7+的关键字和保留字。</li>
+<li>所有数据库对象使用小写字母，实际上MySQL中是可以设置大小写是否敏感的，为了保证统一性，我们这边规范全部小写表示。</li>
+</ol>
+</blockquote>
+<h3 id="数据库命名规范"><a href="#数据库命名规范" class="headerlink" title="数据库命名规范"></a>数据库命名规范</h3><blockquote>
+<ol>
+<li>数据库命名尽量不超过30个字符。</li>
+<li>数据库命名一般为项目名称+代表库含义的简写，比如IM项目的工作流数据库，可以是 im_flow。</li>
+<li>数据库创建时必须添加默认字符集和校对规则子句。默认字符集为UTF8（已迁移dumbo的使用utf8mb4）</li>
+</ol>
+</blockquote>
+<h3 id="表命名规范"><a href="#表命名规范" class="headerlink" title="表命名规范"></a>表命名规范</h3><blockquote>
+<ol>
+<li>常规表表名以t_开头，t代表table的意思，命名规则即 t + 模块（包含模块含义的简写）+ 表（包含表含义的简写），比如用户模块的教育信息表：t_user_eduinfo。</li>
+<li>临时表（RD、QA或DBA同学用于数据临时处理的表），命名规则：temp前缀+模块+表+日期后缀：temp_user_eduinfo_20210719</li>
+<li>备份表（用于保存和归档历史数据或者作为灾备恢复的数据）命名规则，bak前缀+模块+表+日期后缀：bak_user_eduinfo_20210719</li>
+<li>同一个模块的表尽可能使用相同的前缀，表名称尽可能表达含义</li>
+<li>多个单词以下划线 _ 分隔</li>
+<li>常规表表名尽量不超过30个字符，temp表和bak表视情况而定，也尽量简短为宜，命名应使用小写</li>
+</ol>
+</blockquote>
+<h3 id="字段命名规范"><a href="#字段命名规范" class="headerlink" title="字段命名规范"></a>字段命名规范</h3><blockquote>
+<ol>
+<li>字段命名需要表示其实际含义的英文单词或简写，单词之间用下划线 _ 进行连接，如 service_ip、service_port。</li>
+<li>各表之间相同意义的字段必须同名，比如a表和b表都有创建时间，应该统一为create_time，不一致会很混乱。</li>
+<li>多个单词以下划线 _ 分隔</li>
+<li>字段名尽量不超过30个字符，命名应该使用小写</li>
+<li>命名应使用小写。</li>
+</ol>
+</blockquote>
+<h3 id="索引命名规范"><a href="#索引命名规范" class="headerlink" title="索引命名规范"></a>索引命名规范</h3><blockquote>
+<ol>
+<li>唯一索引使用uni + 字段名 来命名： create unique index uni_uid on t_user_basic(uid) 。</li>
+<li>非唯一索引使用idx + 字段名 来命名： create index idx_uname_mobile on t_user_basic(uname,mobile) 。</li>
+<li>多个单词以下划线 _ 分隔。</li>
+<li>索引名尽量不超过50个字符，命名应该使用小写，组合索引的字段不宜太多，不然也不利于查询效率的提升。</li>
+<li>多单词组成的列名，取尽可能代表意义的缩写，如 test_contact表member_id和friend_id上的组合索引：idx_mid_fid。</li>
+<li>理解组合索引最左前缀原则，避免重复建设索引，如果建立了(a,b,c)，相当于建立了(a), (a,b), (a,b,c)。</li>
+</ol>
+</blockquote>
+<h3 id="视图命名规范"><a href="#视图命名规范" class="headerlink" title="视图命名规范"></a>视图命名规范</h3><blockquote>
+<ol>
+<li>视图名以v开头，表示view，完整结构是v+视图内容含义缩写。</li>
+<li>如果视图只来源单个表，则为v+表名。如果视图由几个表关联产生就用v+下划线（_）连接几个表名，视图名尽量不超过30个字符。如超过30个字符则取简写。</li>
+<li>如无特殊需要，严禁开发人员创建视图。</li>
+<li>命名应使用小写。</li>
+</ol>
+</blockquote>
+<h3 id="存储过程命名规范"><a href="#存储过程命名规范" class="headerlink" title="存储过程命名规范"></a>存储过程命名规范</h3><blockquote>
+<ol>
+<li>存储过程名以sp开头，表示存储过程（storage procedure）。之后多个单词以下划线（_）进行连接。存储过程命名中应体现其功能。存储过程名尽量不能超过30个字符。</li>
+<li>存储过程中的输入参数以i_开头，输出参数以o_开头。</li>
+<li>命名应使用小写。<br>create procedure sp_multi_param(in i_id bigint,in i_name varchar(32),out o_memo varchar(100))</li>
+</ol>
+</blockquote>
+<h3 id="函数命名规范"><a href="#函数命名规范" class="headerlink" title="函数命名规范"></a>函数命名规范</h3><blockquote>
+<ol>
+<li>函数名以func开始，表示function。之后多个单词以下划线（_）进行连接，函数命名中应体现其功能。函数名尽量不超过30个字符。</li>
+<li>命名应使用小写。<br>create function func_format_date(ctime datetime)</li>
+</ol>
+</blockquote>
+<h3 id="触发器命名规范"><a href="#触发器命名规范" class="headerlink" title="触发器命名规范"></a>触发器命名规范</h3><blockquote>
+<ol>
+<li>触发器以trig开头，表示trigger 触发器。</li>
+<li>基本部分，描述触发器所加的表，触发器名尽量不超过30个字符。</li>
+<li>后缀（_i,_u,_d）,表示触发条件的触发方式（insert,update或delete）。</li>
+<li>命名应使用小写。</li>
+</ol>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">DROP</span> <span class="hljs-keyword">TRIGGER</span> IF <span class="hljs-keyword">EXISTS</span> trig_attach_log_d;<br><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TRIGGER</span> trig_attach_log_d AFTER <span class="hljs-keyword">DELETE</span> <span class="hljs-keyword">ON</span> t_dept <span class="hljs-keyword">FOR</span> <span class="hljs-keyword">EACH</span> <span class="hljs-type">ROW</span>;<br></code></pre></td></tr></table></figure>
+<h3 id="约束命名规范"><a href="#约束命名规范" class="headerlink" title="约束命名规范"></a>约束命名规范</h3><blockquote>
+<ol>
+<li>唯一约束：uk_表名称_字段名。uk是UNIQUE KEY的缩写。比如给一个部门的部门名称加上唯一约束，来保证不重名，如下：ALTER TABLE t_dept ADDCONSTRAINT un_name UNIQUE(name);</li>
+<li>外键约束：fk_表名，后面紧跟该外键所在的表名和对应的主表名（不含t_）。子表名和父表名用下划线(_)分隔。如下： ALTER TABLE t_user ADDCONSTRAINT fk_user_dept FOREIGN KEY(depno) REFERENCES t_dept (id);</li>
+<li>非空约束：如无特殊需要，建议所有字段默认非空(not null)，不同数据类型必须给出默认值(default)。</li>
+</ol>
+</blockquote>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-number">1</span> `id` <span class="hljs-type">int</span>(<span class="hljs-number">11</span>) <span class="hljs-keyword">NOT</span> <span class="hljs-keyword">NULL</span>,<br><span class="hljs-number">2</span> `name` <span class="hljs-type">varchar</span>(<span class="hljs-number">30</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-string">&#x27;&#x27;</span>,<br><span class="hljs-number">3</span> `deptId` <span class="hljs-type">int</span>(<span class="hljs-number">11</span>) <span class="hljs-keyword">DEFAULT</span> <span class="hljs-number">0</span>,<br><span class="hljs-number">4</span> `salary` <span class="hljs-type">float</span> <span class="hljs-keyword">DEFAULT</span> <span class="hljs-keyword">NULL</span>,<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>4 出于性能考虑，如无特殊需要，建议不使用外键。参照完整性由代码控制。这个也是我们普遍的做法，从程序角度进行完整性控制，但是如果不注意，也会产生脏数据。</p>
+</blockquote>
+<h3 id="DDL"><a href="#DDL" class="headerlink" title="DDL"></a>DDL</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">create</span><span class="hljs-operator">/</span><span class="hljs-keyword">alter</span><span class="hljs-operator">/</span><span class="hljs-keyword">drop</span>  <br>以上过于基础，忽略；<br></code></pre></td></tr></table></figure>
+<h3 id="DML"><a href="#DML" class="headerlink" title="DML"></a>DML</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-keyword">select</span> version();   查看当前版本<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="DML-1"><a href="#DML-1" class="headerlink" title="DML"></a>DML</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql"><br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -433,7 +479,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/java/" class="print-no-link">#java</a>
+        <a href="/tags/mysql/" class="print-no-link">#mysql</a>
       
     </div>
   
@@ -445,8 +491,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Java 运行时内存分析</div>
-      <div>http://example.com/2024/03/29/JavaSummary01/</div>
+      <div>MySql 日常</div>
+      <div>http://example.com/2024/03/19/MySql/MySqlAbout/</div>
     </div>
     <div class="license-meta">
       
@@ -458,7 +504,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年3月30日</div>
+          <div>2024年3月20日</div>
         </div>
       
       
@@ -483,21 +529,15 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/04/01/MySqlSummary02/" title="如何优化慢Sql？">
+                      <a href="/2024/03/19/secondArticle/" title="如何搭建DBT开发环境">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">如何优化慢Sql？</span>
+                        <span class="hidden-mobile">如何搭建DBT开发环境</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
                   </article>
                   <article class="post-next col-6">
                     
-                    
-                      <a href="/2024/03/29/MySqlSummary01/" title="MySql  int(1) 和 int(10) 有什么区别？">
-                        <span class="hidden-mobile">MySql  int(1) 和 int(10) 有什么区别？</span>
-                        <span class="visible-mobile">下一篇</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
                     
                   </article>
                 </div>
