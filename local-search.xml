@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>MySql 专题一(存储结构)</title>
+    <link href="/2025/07/17/MySql/MySqlSummary05/"/>
+    <url>/2025/07/17/MySql/MySqlSummary05/</url>
+    
+    <content type="html"><![CDATA[<h2 id="1、Mysql-的存储结构以下总结以Mysql-Innodb-存储引擎为探讨对象。"><a href="#1、Mysql-的存储结构以下总结以Mysql-Innodb-存储引擎为探讨对象。" class="headerlink" title="1、Mysql 的存储结构以下总结以Mysql Innodb 存储引擎为探讨对象。"></a>1、Mysql 的存储结构以下总结以Mysql Innodb 存储引擎为探讨对象。</h2><p>  MySQL 的存储结构多为B+树作为底层的存储结构；</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>mysql</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>Java 多线程</title>
     <link href="/2025/02/28/Java/JavaSummary02/"/>
     <url>/2025/02/28/Java/JavaSummary02/</url>
