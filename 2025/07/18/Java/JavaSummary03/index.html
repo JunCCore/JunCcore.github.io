@@ -16,24 +16,24 @@
   <meta name="author" content="JunCCore">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Redis 为什么是单线程的,其核心原理是什么？">
+    <meta name="description" content="Java 线程池五种生命周期状态详解 以 Java java.util.concurrent.ThreadPoolExecutor 为基准，结合源码与运行模型，系统梳理线程池的 5 个枚举状态及其转换条件、可见行为与监控方式。   一、状态总览表   枚举值 数值 中文描述 是否接受新任务 是否处理队列剩余任务    RUNNING -1 运行中 ✅ ✅   SHUTDOWN 0 关闭中 ❌ ✅">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Redis专题（Redis 为什么是单线程的？）">
-<meta property="og:url" content="http://example.com/2025/07/18/Redis/RedisSummary01/index.html">
+<meta property="og:title" content="Java 专题（并发编程之线程池状态）">
+<meta property="og:url" content="http://example.com/2025/07/18/Java/JavaSummary03/index.html">
 <meta property="og:site_name" content="「事有归着，心存寄物」">
-<meta property="og:description" content="Redis 为什么是单线程的,其核心原理是什么？">
+<meta property="og:description" content="Java 线程池五种生命周期状态详解 以 Java java.util.concurrent.ThreadPoolExecutor 为基准，结合源码与运行模型，系统梳理线程池的 5 个枚举状态及其转换条件、可见行为与监控方式。   一、状态总览表   枚举值 数值 中文描述 是否接受新任务 是否处理队列剩余任务    RUNNING -1 运行中 ✅ ✅   SHUTDOWN 0 关闭中 ❌ ✅">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/img/redisTop.png">
+<meta property="og:image" content="http://example.com/img/Java.png">
 <meta property="article:published_time" content="2025-07-18T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-07-19T08:09:09.289Z">
+<meta property="article:modified_time" content="2025-07-19T08:09:09.288Z">
 <meta property="article:author" content="JunCCore">
-<meta property="article:tag" content="redis">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/img/redisTop.png">
+<meta name="twitter:image" content="http://example.com/img/Java.png">
   
   
   
-  <title>Redis专题（Redis 为什么是单线程的？） - 「事有归着，心存寄物」</title>
+  <title>Java 专题（并发编程之线程池状态） - 「事有归着，心存寄物」</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -257,7 +257,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Redis专题（Redis 为什么是单线程的？）"></span>
+            <span id="subtitle" data-typed-text="Java 专题（并发编程之线程池状态）"></span>
           
         </div>
 
@@ -280,7 +280,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          369 字
+          504 字
         
       </span>
     
@@ -291,7 +291,7 @@
         
         
         
-          4 分钟
+          5 分钟
         
       </span>
     
@@ -349,79 +349,137 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Redis专题（Redis 为什么是单线程的？）</h1>
+            <h1 id="seo-header">Java 专题（并发编程之线程池状态）</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Redis-事件循环与多路复用详解-（单线程的核心原理）"><a href="#Redis-事件循环与多路复用详解-（单线程的核心原理）" class="headerlink" title="Redis 事件循环与多路复用详解 （单线程的核心原理）"></a>Redis 事件循环与多路复用详解 （单线程的核心原理）</h1><blockquote>
-<p>本文用通俗易懂的语言，结合类比与源码级要点，全面解析 Redis 的事件循环（Event Loop）与多路复用（Multiplexing）机制。</p>
+                <h1 id="Java-线程池五种生命周期状态详解"><a href="#Java-线程池五种生命周期状态详解" class="headerlink" title="Java 线程池五种生命周期状态详解"></a>Java 线程池五种生命周期状态详解</h1><blockquote>
+<p>以 <strong>Java <code>java.util.concurrent.ThreadPoolExecutor</code></strong> 为基准，结合源码与运行模型，系统梳理线程池的 5 个枚举状态及其转换条件、可见行为与监控方式。</p>
 </blockquote>
 <hr>
-<h2 id="一、事件循环（Event-Loop）"><a href="#一、事件循环（Event-Loop）" class="headerlink" title="一、事件循环（Event Loop）"></a>一、事件循环（Event Loop）</h2><h3 id="1-什么是事件循环？"><a href="#1-什么是事件循环？" class="headerlink" title="1. 什么是事件循环？"></a>1. 什么是事件循环？</h3><p>事件循环是 Redis <strong>单线程</strong> 的核心调度器，负责持续地：</p>
-<ol>
-<li><strong>等待事件</strong>（阻塞等待 I&#x2F;O）</li>
-<li><strong>获取事件</strong>（哪些 fd 可读&#x2F;可写&#x2F;异常）</li>
-<li><strong>处理事件</strong>（调用对应的回调函数）</li>
-<li><strong>继续循环</strong></li>
-</ol>
-<blockquote>
-<p>类比：前台接待员不断询问“哪个窗口需要服务”。</p>
-</blockquote>
-<h3 id="2-事件类型"><a href="#2-事件类型" class="headerlink" title="2. 事件类型"></a>2. 事件类型</h3><table>
+<h2 id="一、状态总览表"><a href="#一、状态总览表" class="headerlink" title="一、状态总览表"></a>一、状态总览表</h2><table>
 <thead>
 <tr>
-<th>类型</th>
-<th>触发条件</th>
-<th>典型回调</th>
+<th>枚举值</th>
+<th>数值</th>
+<th>中文描述</th>
+<th>是否接受新任务</th>
+<th>是否处理队列剩余任务</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>文件事件</strong></td>
-<td>socket 可读&#x2F;可写&#x2F;异常</td>
-<td>读取客户端命令、发送响应</td>
+<td><code>RUNNING</code></td>
+<td>-1</td>
+<td>运行中</td>
+<td>✅</td>
+<td>✅</td>
 </tr>
 <tr>
-<td><strong>时间事件</strong></td>
-<td>定时器到期</td>
-<td>删除过期键、AOF 重写</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="二、多路复用（Multiplexing）"><a href="#二、多路复用（Multiplexing）" class="headerlink" title="二、多路复用（Multiplexing）"></a>二、多路复用（Multiplexing）</h2><h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h3><p>多路复用让 <strong>一个线程</strong> 同时监听 <strong>多个文件描述符（fd）</strong> 的 I&#x2F;O 状态，从而高效处理大量并发连接。</p>
-<h3 id="2-系统实现"><a href="#2-系统实现" class="headerlink" title="2. 系统实现"></a>2. 系统实现</h3><table>
-<thead>
-<tr>
-<th>操作系统</th>
-<th>实现机制</th>
-<th>特点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Linux</td>
-<td><code>epoll</code></td>
-<td>O(1) 时间复杂度，支持边缘&#x2F;水平触发</td>
+<td><code>SHUTDOWN</code></td>
+<td>0</td>
+<td>关闭中</td>
+<td>❌</td>
+<td>✅</td>
 </tr>
 <tr>
-<td>macOS&#x2F;BSD</td>
-<td><code>kqueue</code></td>
-<td>类似 epoll</td>
+<td><code>STOP</code></td>
+<td>1</td>
+<td>停止中</td>
+<td>❌</td>
+<td>❌</td>
 </tr>
 <tr>
-<td>Windows</td>
-<td><code>select</code></td>
-<td>性能较低，仅兼容</td>
+<td><code>TIDYING</code></td>
+<td>2</td>
+<td>整理中</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><code>TERMINATED</code></td>
+<td>3</td>
+<td>已终止</td>
+<td>❌</td>
+<td>❌</td>
 </tr>
 </tbody></table>
 <blockquote>
-<p>Redis 在 <code>ae.c</code> 中通过宏自动选择最优实现。</p>
+<p>状态值保存在 <code>ThreadPoolExecutor</code> 的 <code>ctl</code> 原子整数的高 3 位；低 29 位记录工作线程数。</p>
 </blockquote>
-<h3 id="3-epoll-工作流程（简化）"><a href="#3-epoll-工作流程（简化）" class="headerlink" title="3. epoll 工作流程（简化）"></a>3. epoll 工作流程（简化）</h3><pre><code class="c">epfd = epoll_create(1024);          // 创建 epoll 实例
-epoll_ctl(epfd, EPOLL_CTL_ADD, fd, &amp;ev); // 注册 fd
-while (1) &#123;
-    n = epoll_wait(epfd, events, MAX, timeout); // 等待事件
-    for (i = 0; i &lt; n; i++) handle(events[i]);   // 处理就绪 fd
-&#125;
+<hr>
+<h2 id="二、各状态详解"><a href="#二、各状态详解" class="headerlink" title="二、各状态详解"></a>二、各状态详解</h2><h3 id="1-RUNNING"><a href="#1-RUNNING" class="headerlink" title="1. RUNNING"></a>1. RUNNING</h3><ul>
+<li><strong>定义</strong><br>线程池一旦创建即处于该状态。</li>
+<li><strong>行为</strong><ul>
+<li>接收新提交任务</li>
+<li>正常处理阻塞队列中的任务</li>
+</ul>
+</li>
+<li><strong>进入条件</strong><br><code>new ThreadPoolExecutor(...)</code> 默认即为 RUNNING</li>
+<li><strong>退出条件</strong><ul>
+<li>调用 <code>shutdown()</code> → <strong>SHUTDOWN</strong></li>
+<li>调用 <code>shutdownNow()</code> → <strong>STOP</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="2-SHUTDOWN"><a href="#2-SHUTDOWN" class="headerlink" title="2. SHUTDOWN"></a>2. SHUTDOWN</h3><ul>
+<li><strong>定义</strong><br>平滑关闭，不再接收新任务，但会执行完已提交任务（包括队列中等待的任务）。</li>
+<li><strong>触发 API</strong><br><code>shutdown()</code></li>
+<li><strong>行为</strong><ul>
+<li>拒绝新提交任务（抛 <code>RejectedExecutionException</code>）</li>
+<li>继续消费队列直到为空</li>
+</ul>
+</li>
+<li><strong>退出条件</strong><ul>
+<li>队列 &amp; 线程数均为 0 → <strong>TIDYING</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-STOP"><a href="#3-STOP" class="headerlink" title="3. STOP"></a>3. STOP</h3><ul>
+<li><strong>定义</strong><br>立即关闭，不接收新任务，也不处理队列剩余任务，同时中断正在执行的任务。</li>
+<li><strong>触发 API</strong><br><code>shutdownNow()</code></li>
+<li><strong>行为</strong><ul>
+<li>拒绝新提交任务</li>
+<li>清空队列，返回尚未执行的任务 <code>List&lt;Runnable&gt;</code></li>
+<li>对所有工作线程调用 <code>Thread.interrupt()</code></li>
+</ul>
+</li>
+<li><strong>退出条件</strong><ul>
+<li>线程数为 0 → <strong>TIDYING</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4-TIDYING"><a href="#4-TIDYING" class="headerlink" title="4. TIDYING"></a>4. TIDYING</h3><ul>
+<li><strong>定义</strong><br>过渡状态；所有任务已终止，线程数为 0，线程池即将进入 TERMINATED。</li>
+<li><strong>钩子回调</strong><br>在此状态下会执行 <code>terminated()</code> 空方法（用户可继承线程池重写）。</li>
+<li><strong>退出条件</strong><br><code>terminated()</code> 执行完毕 → <strong>TERMINATED</strong></li>
+</ul>
+<hr>
+<h3 id="5-TERMINATED"><a href="#5-TERMINATED" class="headerlink" title="5. TERMINATED"></a>5. TERMINATED</h3><ul>
+<li><strong>定义</strong><br>线程池生命周期终点。</li>
+<li><strong>行为</strong><ul>
+<li>所有资源释放完毕</li>
+<li><code>awaitTermination()</code> 调用者被唤醒</li>
+</ul>
+</li>
+<li><strong>监控方式</strong><ul>
+<li><code>isTerminated()</code> 返回 <code>true</code></li>
+<li>JMX &#x2F; <code>ThreadPoolExecutor.toString()</code> 输出状态为 <strong>TERMINATED</strong></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="三、状态转换图"><a href="#三、状态转换图" class="headerlink" title="三、状态转换图"></a>三、状态转换图</h2><pre><code class="mermaid">stateDiagram-v2
+    [*] --&gt; RUNNING
+    RUNNING --&gt; SHUTDOWN : shutdown()
+    RUNNING --&gt; STOP     : shutdownNow()
+    SHUTDOWN --&gt; TIDYING : 队列 &amp;&amp; 线程==0
+    STOP --&gt; TIDYING     : 线程==0
+    TIDYING --&gt; TERMINATED : terminated() 完
+    TERMINATED --&gt; [*]
 </code></pre>
 
                 
@@ -456,7 +514,7 @@ while (1) &#123;
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/redis/" class="print-no-link">#redis</a>
+        <a href="/tags/java/" class="print-no-link">#java</a>
       
     </div>
   
@@ -468,8 +526,8 @@ while (1) &#123;
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Redis专题（Redis 为什么是单线程的？）</div>
-      <div>http://example.com/2025/07/18/Redis/RedisSummary01/</div>
+      <div>Java 专题（并发编程之线程池状态）</div>
+      <div>http://example.com/2025/07/18/Java/JavaSummary03/</div>
     </div>
     <div class="license-meta">
       
@@ -506,18 +564,12 @@ while (1) &#123;
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/18/Java/JavaSummary03/" title="Java 专题（并发编程之线程池状态）">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Java 专题（并发编程之线程池状态）</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/17/MySql/MySqlSummary05/" title="MySql 专题一(存储结构)">
-                        <span class="hidden-mobile">MySql 专题一(存储结构)</span>
+                      <a href="/2025/07/18/Redis/RedisSummary01/" title="Redis专题（Redis 为什么是单线程的？）">
+                        <span class="hidden-mobile">Redis专题（Redis 为什么是单线程的？）</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
