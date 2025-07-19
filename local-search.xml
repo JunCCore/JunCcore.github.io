@@ -4,6 +4,31 @@
   
   
   <entry>
+    <title>Redis专题（Redis 为什么是单线程的？）</title>
+    <link href="/2025/07/18/Redis/RedisSummary01/"/>
+    <url>/2025/07/18/Redis/RedisSummary01/</url>
+    
+    <content type="html"><![CDATA[<h1 id="Redis-事件循环与多路复用详解-（单线程的核心原理）"><a href="#Redis-事件循环与多路复用详解-（单线程的核心原理）" class="headerlink" title="Redis 事件循环与多路复用详解 （单线程的核心原理）"></a>Redis 事件循环与多路复用详解 （单线程的核心原理）</h1><blockquote><p>本文用通俗易懂的语言，结合类比与源码级要点，全面解析 Redis 的事件循环（Event Loop）与多路复用（Multiplexing）机制。</p></blockquote><hr><h2 id="一、事件循环（Event-Loop）"><a href="#一、事件循环（Event-Loop）" class="headerlink" title="一、事件循环（Event Loop）"></a>一、事件循环（Event Loop）</h2><h3 id="1-什么是事件循环？"><a href="#1-什么是事件循环？" class="headerlink" title="1. 什么是事件循环？"></a>1. 什么是事件循环？</h3><p>事件循环是 Redis <strong>单线程</strong> 的核心调度器，负责持续地：</p><ol><li><strong>等待事件</strong>（阻塞等待 I&#x2F;O）</li><li><strong>获取事件</strong>（哪些 fd 可读&#x2F;可写&#x2F;异常）</li><li><strong>处理事件</strong>（调用对应的回调函数）</li><li><strong>继续循环</strong></li></ol><blockquote><p>类比：前台接待员不断询问“哪个窗口需要服务”。</p></blockquote><h3 id="2-事件类型"><a href="#2-事件类型" class="headerlink" title="2. 事件类型"></a>2. 事件类型</h3><table><thead><tr><th>类型</th><th>触发条件</th><th>典型回调</th></tr></thead><tbody><tr><td><strong>文件事件</strong></td><td>socket 可读&#x2F;可写&#x2F;异常</td><td>读取客户端命令、发送响应</td></tr><tr><td><strong>时间事件</strong></td><td>定时器到期</td><td>删除过期键、AOF 重写</td></tr></tbody></table><hr><h2 id="二、多路复用（Multiplexing）"><a href="#二、多路复用（Multiplexing）" class="headerlink" title="二、多路复用（Multiplexing）"></a>二、多路复用（Multiplexing）</h2><h3 id="1-概念"><a href="#1-概念" class="headerlink" title="1. 概念"></a>1. 概念</h3><p>多路复用让 <strong>一个线程</strong> 同时监听 <strong>多个文件描述符（fd）</strong> 的 I&#x2F;O 状态，从而高效处理大量并发连接。</p><h3 id="2-系统实现"><a href="#2-系统实现" class="headerlink" title="2. 系统实现"></a>2. 系统实现</h3><table><thead><tr><th>操作系统</th><th>实现机制</th><th>特点</th></tr></thead><tbody><tr><td>Linux</td><td><code>epoll</code></td><td>O(1) 时间复杂度，支持边缘&#x2F;水平触发</td></tr><tr><td>macOS&#x2F;BSD</td><td><code>kqueue</code></td><td>类似 epoll</td></tr><tr><td>Windows</td><td><code>select</code></td><td>性能较低，仅兼容</td></tr></tbody></table><blockquote><p>Redis 在 <code>ae.c</code> 中通过宏自动选择最优实现。</p></blockquote><h3 id="3-epoll-工作流程（简化）"><a href="#3-epoll-工作流程（简化）" class="headerlink" title="3. epoll 工作流程（简化）"></a>3. epoll 工作流程（简化）</h3><pre><code class="c">epfd = epoll_create(1024);          // 创建 epoll 实例epoll_ctl(epfd, EPOLL_CTL_ADD, fd, &amp;ev); // 注册 fdwhile (1) &#123;    n = epoll_wait(epfd, events, MAX, timeout); // 等待事件    for (i = 0; i &lt; n; i++) handle(events[i]);   // 处理就绪 fd&#125;</code></pre>]]></content>
+    
+    
+    <categories>
+      
+      <category>技术分享</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>redis</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>MySql 专题一(存储结构)</title>
     <link href="/2025/07/17/MySql/MySqlSummary05/"/>
     <url>/2025/07/17/MySql/MySqlSummary05/</url>
